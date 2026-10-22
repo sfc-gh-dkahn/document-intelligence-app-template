@@ -1,0 +1,16 @@
+label,category,sort_order
+Contract,Contracts,1
+Amendment,Contracts,2
+Statement of Work,Contracts,3
+Invoice,Financial,4
+Purchase Order,Financial,5
+Receipt,Financial,6
+Financial Statement,Financial,7
+Report,Operations,8
+Policy or Procedure,Operations,9
+Form,Operations,10
+Letter,Correspondence,11
+Email,Correspondence,12
+Certificate,Compliance,13
+Regulatory Filing,Compliance,14
+Other,Other,15

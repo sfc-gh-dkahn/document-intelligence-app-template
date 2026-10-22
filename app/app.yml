@@ -1,0 +1,12 @@
+profile:
+  label: "Document Intelligence"
+  description: "Search, analytics, and Q&A over your documents"
+  icon: icon.svg
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
+  executeAsCaller: true
