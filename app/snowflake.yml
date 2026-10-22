@@ -1,0 +1,31 @@
+definition_version: "2"
+# NOTE: scripts/rename.sh keeps these in step with config/deploy.config:
+#   DOC_INTEL_QUERY_WH → query_warehouse
+#   DOC_INTEL_COMPUTE_POOL → build_compute_pool.name
+#   DOC_INTEL_EAI → build_eai.name
+
+entities:
+  doc_intel_app:
+    type: snowflake-app
+    identifier:
+      name: DOC_INTEL_APP
+      database: DOC_INTEL
+      schema: APP_SERVICE
+    artifacts:
+      - src: ./*
+        dest: ./
+        ignore:
+          - node_modules
+          - .env*
+          - __pycache__
+          - "*.pyc"
+          - .next
+          - .git
+          - snowflake.log
+
+    query_warehouse: DOC_INTEL_QUERY_WH
+    build_compute_pool:
+      name: DOC_MONITOR_POOL
+    build_eai:
+      name: DOC_INTEL_EGRESS_EAI
+    code_workspace: DOC_INTEL.APP_SERVICE.SNOWFLAKE_APPS

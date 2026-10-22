@@ -1,0 +1,5 @@
+role_name,description,menu_access,lob_access,doc_type_access,can_download
+Administrator,Full access to all features data and admin UI,dashboard|documents|search|review|chat|saved|help|admin:pipeline|admin:registry|admin:quality|admin:cost|admin:extraction|admin:labels|admin:lobs|admin:suggested-searches|admin:notifications|admin:config|admin:audit|admin:users,*,*,TRUE
+Analyst,All user pages and all documents,dashboard|documents|search|review|chat|saved|help,*,*,TRUE
+Finance Reviewer,Example of a scoped role: Finance documents only,dashboard|documents|search|chat|saved|help,FIN,Invoice|Purchase Order|Receipt|Financial Statement,TRUE
+Viewer,Read-only search and browse with no downloads,dashboard|documents|search|help,*,*,FALSE

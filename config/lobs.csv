@@ -1,0 +1,6 @@
+lob_code,lob_name,description,is_default,sort_order
+GEN,General,"Documents that do not belong to one department",TRUE,1
+FIN,Finance,"Invoices, payments, budgets, financial statements",FALSE,2
+OPS,Operations,"Reports, procedures, forms, operating records",FALSE,3
+LEG,Legal,"Contracts, amendments, compliance, regulatory filings",FALSE,4
+HR,Human Resources,"Employee, hiring, benefits, and policy documents",FALSE,5

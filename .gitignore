@@ -1,0 +1,29 @@
+# Python artifacts (from any local tooling)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Snowflake CLI local files — but keep the repo's Cortex Code skill
+.snowflake/*
+!.snowflake/cortex/
+.snowflake/cortex/*
+!.snowflake/cortex/skills/
+
+# Secrets and local env
+.env
+.env.local
+.env.*.local
+
+# Release zips
+*.zip
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.idea/
+.vscode/settings.json
+*.swp
+*.swo

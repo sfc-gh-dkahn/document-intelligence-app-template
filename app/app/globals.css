@@ -1,0 +1,216 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* === Brand Variables ===
+   Defaults are the Document Intelligence values. Override via layout.tsx <style> injection
+   using NEXT_PUBLIC_BRAND_* env vars (see theme.config.ts). */
+:root {
+  --brand-primary: #29B5E8;
+  --brand-dark:    #11567F;
+  --brand-bg:      #0A1428;
+  --brand-light:   #EBF5FB;
+  --brand-mid:     #D6EAF8;
+  --brand-pale:    #F2FAFE;
+  --brand-border:  #E8F6FD;
+  --surface:       #ffffff;
+  --surface-alt:   #f8fafc;
+  --surface-hover: #f1f5f9;
+  --border:        #e2e8f0;
+  --text-primary:  #1a2740;
+  --text-secondary:#475569;
+  --text-muted:    #94a3b8;
+}
+
+html.dark {
+  --brand-light:   #1e293b;
+  --brand-mid:     #1e3a5f;
+  --brand-pale:    #0f172a;
+  --brand-border:  #475569;
+  --surface:       #1e293b;
+  --surface-alt:   #0f172a;
+  --surface-hover: #334155;
+  --border:        #475569;
+  --text-primary:  #f1f5f9;
+  --text-secondary:#e2e8f0;
+  --text-muted:    #94a3b8;
+}
+
+body {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+
+/* Cards */
+.sf-card {
+  background: var(--surface);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+html.dark .sf-card {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+}
+
+/* Buttons */
+.sf-btn-primary {
+  background: var(--brand-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s, opacity 0.15s;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+}
+.sf-btn-primary:hover { filter: brightness(0.9); }
+.sf-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.sf-btn-secondary {
+  background: var(--surface);
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  transition: background-color 0.15s;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.sf-btn-secondary:hover { background: var(--surface-hover); }
+
+/* Badges */
+.sf-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-complete   { background: #dcfce7; color: #166534; }
+.badge-pending    { background: #fef3c7; color: #92400e; }
+.badge-failed     { background: #fee2e2; color: #991b1b; }
+.badge-abandoned  { background: #f1f5f9; color: #64748b; }
+.badge-open       { background: #e0f2fe; color: #0369a1; }
+.badge-closed     { background: #f1f5f9; color: #475569; }
+
+.fmt-pdf  { background: #fef2f2; color: #b91c1c; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+.fmt-tiff { background: #f5f3ff; color: #7c3aed; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+.fmt-docx { background: #eff6ff; color: #1d4ed8; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+.fmt-jpeg, .fmt-png { background: #fffbeb; color: #b45309; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+
+/* Nav */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-link:hover  { background: var(--brand-light); color: var(--brand-dark); }
+.nav-link.active { background: var(--brand-light); color: var(--brand-dark); }
+
+/* Dark mode structural overrides */
+html.dark header { background: var(--surface) !important; }
+html.dark .bg-slate-50 { background: var(--surface-alt) !important; }
+html.dark .text-slate-800 { color: var(--text-primary) !important; }
+html.dark .text-slate-300 { color: var(--text-muted) !important; }
+html.dark .hover\:bg-slate-50:hover { background: var(--surface-hover) !important; }
+html.dark select,
+html.dark input[type="text"],
+html.dark input[type="search"],
+html.dark textarea {
+  background: var(--surface-alt) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+html.dark table thead { background: var(--surface-alt) !important; }
+html.dark .nav-link:hover,
+html.dark .nav-link.active { color: var(--brand-primary); }
+/* Dark mode color overrides — badges, callouts, backgrounds */
+html.dark .bg-emerald-100 { background: rgba(16, 185, 129, 0.15) !important; }
+html.dark .text-emerald-700 { color: #6ee7b7 !important; }
+html.dark .bg-blue-100 { background: rgba(59, 130, 246, 0.2) !important; }
+html.dark .text-blue-700 { color: #93c5fd !important; }
+html.dark .bg-purple-100 { background: rgba(139, 92, 246, 0.2) !important; }
+html.dark .text-purple-700 { color: #c4b5fd !important; }
+html.dark .bg-amber-100 { background: rgba(245, 158, 11, 0.2) !important; }
+html.dark .text-amber-700 { color: #fbbf24 !important; }
+html.dark .bg-red-100 { background: rgba(239, 68, 68, 0.2) !important; }
+html.dark .text-red-700 { color: #fca5a5 !important; }
+html.dark .bg-blue-50 { background: rgba(59, 130, 246, 0.12) !important; }
+html.dark .bg-red-50 { background: rgba(239, 68, 68, 0.12) !important; }
+html.dark .bg-amber-50 { background: rgba(245, 158, 11, 0.12) !important; }
+html.dark .bg-green-50 { background: rgba(16, 185, 129, 0.12) !important; }
+html.dark .bg-slate-100 { background: rgba(148, 163, 184, 0.15) !important; }
+html.dark .bg-slate-200 { background: rgba(148, 163, 184, 0.2) !important; }
+html.dark .text-green-600 { color: #4ade80 !important; }
+html.dark .text-green-700 { color: #86efac !important; }
+html.dark .text-amber-600 { color: #fbbf24 !important; }
+html.dark .text-slate-600 { color: #cbd5e1 !important; }
+html.dark .text-slate-500 { color: #94a3b8 !important; }
+html.dark .text-slate-400 { color: #64748b !important; }
+html.dark .text-slate-700 { color: #e2e8f0 !important; }
+/* Dark mode borders */
+html.dark .border-green-200 { border-color: rgba(16, 185, 129, 0.3) !important; }
+html.dark .border-amber-200 { border-color: rgba(245, 158, 11, 0.3) !important; }
+html.dark .border-amber-100 { border-color: rgba(245, 158, 11, 0.2) !important; }
+html.dark .border-slate-200 { border-color: var(--border) !important; }
+html.dark .border-slate-100 { border-color: rgba(148, 163, 184, 0.15) !important; }
+/* Progress bar track */
+html.dark .bg-white { background: var(--surface) !important; }
+/* Dropdown and popover */
+html.dark .shadow-lg { --tw-shadow-color: rgba(0, 0, 0, 0.5); }
+html.dark .hover\:bg-blue-50:hover { background: rgba(59, 130, 246, 0.15) !important; }
+html.dark .hover\:bg-green-100:hover { background: rgba(16, 185, 129, 0.2) !important; }
+html.dark .hover\:bg-amber-100:hover { background: rgba(245, 158, 11, 0.2) !important; }
+html.dark .hover\:bg-slate-100:hover { background: rgba(148, 163, 184, 0.15) !important; }
+
+/* === PDF.js Text Layer === */
+.textLayer {
+  position: absolute;
+  text-align: initial;
+  inset: 0;
+  overflow: clip;
+  opacity: 1;
+  line-height: 1;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+  z-index: 2;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+.textLayer :is(span, br) {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+}
+.textLayer > :not(.markedContent),
+.textLayer .markedContent span:not(.markedContent) {
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+}
+.textLayer span::selection {
+  background: rgba(41, 181, 232, 0.3);
+}
+.textLayer span.search-match {
+  background: rgba(251, 191, 36, 0.4);
+  border-radius: 2px;
+}
+html.dark .textLayer span.search-match {
+  background: rgba(251, 191, 36, 0.35);
+}

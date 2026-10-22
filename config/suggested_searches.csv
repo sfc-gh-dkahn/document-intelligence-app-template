@@ -1,0 +1,9 @@
+lob_code,label,query,sort_order
+GEN,Recent documents,documents added this month,1
+GEN,Needs follow-up,documents with required actions or deadlines,2
+FIN,Large invoices,invoices with the largest amounts,1
+FIN,Unpaid balances,invoices or statements with an outstanding balance,2
+OPS,Open issues,reports with open findings or issues,1
+LEG,Contracts expiring soon,contracts with an end or renewal date in the next 90 days,1
+LEG,Renewal terms,contracts with automatic renewal terms,2
+HR,Policy updates,policies or procedures updated this year,1

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Document stack base -->
+  <rect x="8" y="14" width="40" height="50" rx="4" fill="#11567F" opacity="0.15"/>
+  <rect x="12" y="10" width="40" height="50" rx="4" fill="#29B5E8" opacity="0.25"/>
+  <!-- Main document -->
+  <rect x="16" y="6" width="40" height="50" rx="4" fill="white" stroke="#29B5E8" stroke-width="2"/>
+  <!-- Search circle -->
+  <circle cx="43" cy="39" r="10" fill="white" stroke="#29B5E8" stroke-width="2.5"/>
+  <circle cx="43" cy="39" r="5" fill="#29B5E8" opacity="0.3"/>
+  <!-- Search lines (doc content) -->
+  <line x1="24" y1="18" x2="44" y2="18" stroke="#11567F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="24" x2="44" y2="24" stroke="#11567F" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="30" x2="36" y2="30" stroke="#29B5E8" stroke-width="2" stroke-linecap="round"/>
+  <!-- Search handle -->
+  <line x1="50" y1="46" x2="56" y2="52" stroke="#11567F" stroke-width="3" stroke-linecap="round"/>
+</svg>

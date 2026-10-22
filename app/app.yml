@@ -1,0 +1,12 @@
+profile:
+  label: "Document Intelligence"
+  description: "AI-powered document intelligence platform — search, analytics, and Q&A over your document corpus"
+  icon: icon.svg
+
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
+  executeAsCaller: true
