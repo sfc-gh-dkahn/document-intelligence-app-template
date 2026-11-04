@@ -321,13 +321,14 @@ Columns: `query_id`, `query_time`, `user_name`, `user_role`, `question`, `tool_u
 
 ### Alerts
 
-Three Snowflake alerts write a `PIPELINE_ALERT` event (stage `ALERT`, status `TRIGGERED`) to `pipeline_events`. They do not send email. To email alerts, create a notification integration and add a `SYSTEM$SEND_EMAIL` call to each alert's action.
+The template creates no Snowflake alerts. At the end of each pipeline run, `sp_emit_pipeline_metrics` writes a `PIPELINE_ALERT` event (stage `ALERT`, status `TRIGGERED`) to `pipeline_events` when a limit is passed:
 
-| Alert | Schedule | Fires when | `alert_type` |
-|---|---|---|---|
-| `alert_high_error_rate` | Daily, 07:00 UTC | More than 5% of PARSE/CLASSIFY/EXTRACT events in the last 24 hours have status FAILED | HIGH_ERROR_RATE |
-| `alert_queue_backlog` | Daily, 07:00 UTC | More than 500 pending and the oldest has waited over 120 minutes | QUEUE_BACKLOG |
-| `alert_low_confidence` | Daily, 07:00 UTC | More than 20% of documents classified yesterday and today need review | LOW_CONFIDENCE |
+| Fires when | `alert_type` |
+|---|---|
+| The 24-hour PARSE/CLASSIFY/EXTRACT error rate passes `error_rate_threshold_pct` (default 5) | HIGH_ERROR_RATE |
+| Pending documents pass `queue_backlog_threshold` (default 500) | QUEUE_BACKLOG |
+
+These events are not sent anywhere. To get an email when one is written, see "Set up failure alerts" in `OPERATIONS_GUIDE.md`.
 
 ---
 

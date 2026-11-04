@@ -65,7 +65,7 @@ Snowflake roles decide who can open the app. Inside the app, app roles decide wh
 ## Learn more
 
 - [User Manual](docs/USER_MANUAL.md): using each tab
-- [Operations Guide](docs/OPERATIONS_GUIDE.md): prerequisites, manual setup, customization by hand, cost tracking, and troubleshooting
+- [Operations Guide](docs/OPERATIONS_GUIDE.md): prerequisites, manual setup, customization by hand, cost tracking, failure alerts, and troubleshooting
 - [Data Dictionary](docs/DATA_DICTIONARY.md): tables, views, and fields
 - [API Reference](docs/API_REFERENCE.md): the app's API
 

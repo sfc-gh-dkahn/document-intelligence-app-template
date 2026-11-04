@@ -310,7 +310,7 @@ Audit trail of agent and Snowflake Intelligence questions. Nothing in the app wr
 
 ### Alerts
 
-`alert_high_error_rate`, `alert_queue_backlog`, `alert_low_confidence`. Each writes a `PIPELINE_ALERT` event. See `API_REFERENCE.md`.
+The template creates no Snowflake alerts. `sp_emit_pipeline_metrics` writes `PIPELINE_ALERT` events. See `API_REFERENCE.md`. To get an email, see "Set up failure alerts" in `OPERATIONS_GUIDE.md`.
 
 ---
 
@@ -351,7 +351,7 @@ Key-value settings store.
 | search_embedding_model | snowflake-arctic-embed-l-v2.0 | STRING | — | Cortex Search embedding model |
 | agent_model | claude-sonnet-4-5 | STRING | — | LLM for the Cortex Agent |
 
-"—" means no pipeline logic reads the key today; the matching behavior is set in the SQL scripts. The Configuration page shows and edits every key. `alert_high_error_rate` and `alert_queue_backlog` use fixed thresholds (5%, and 500 pending older than 120 minutes) and do not read these keys.
+"—" means no pipeline logic reads the key today; the matching behavior is set in the SQL scripts. The Configuration page shows and edits every key.
 
 ### `extraction_overrides`
 

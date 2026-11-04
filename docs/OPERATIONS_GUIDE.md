@@ -75,7 +75,7 @@ Snowflake's cost pages explain each charge: [AI functions](https://docs.snowflak
 
 - Each run takes at most 100 documents (`batch_size`). Every upload starts a run; `upload_docs.sh --drain` keeps starting runs until nothing is waiting.
 - `DOC_INTEL_WH` (Medium) runs the AI steps and suspends after 2 idle minutes. Each scheduled run (daily by default) uses it; see [Pipeline Schedule](#pipeline-schedule). Snowflake recommends no larger than Medium for document parsing.
-- `DOC_INTEL_QUERY_WH` (X-Small) serves the app and the three daily alerts, and suspends after 1 idle minute.
+- `DOC_INTEL_QUERY_WH` (X-Small) serves the app and suspends after 1 idle minute.
 - The dynamic tables and Cortex Search services have a 1-hour target lag on `DOC_INTEL_WH`. Cortex Search also bills for serving while it runs, based on the size of the indexed data.
 - The template creates the `DOC_MONITOR_POOL` compute pool (CPU_X64_S), set to suspend after 5 minutes with nothing running.
 - The app runs on Snowflake App Runtime and bills while it runs, even with no users. To let it suspend when idle and resume on the next visit, set `DOC_INTEL_APP_IDLE_SUSPEND_SECS` in `config/deploy.config` (0 = always on, the default; 900 = after 15 minutes; minimum 300); `deploy.sh` applies it after each app deploy. To stop it: `ALTER APPLICATION SERVICE DOC_INTEL.APP_SERVICE.DOC_INTEL_APP SUSPEND;` (`RESUME` to restart).
@@ -156,6 +156,7 @@ GROUP BY 1, 2 ORDER BY 3 DESC;
 
 ### Check Alerts
 
+At the end of each pipeline run, `sp_emit_pipeline_metrics` writes a `PIPELINE_ALERT` event when the 24-hour error rate passes `error_rate_threshold_pct` or pending documents pass `queue_backlog_threshold`:
 ```sql
 SELECT event_time, metadata:alert_type::VARCHAR AS alert_type
 FROM DOC_INTEL.TELEMETRY.pipeline_events
@@ -163,6 +164,37 @@ WHERE event_type = 'PIPELINE_ALERT'
   AND event_time >= DATEADD('DAY', -1, CURRENT_TIMESTAMP())
 ORDER BY event_time DESC;
 ```
+
+### Set up failure alerts
+
+The template doesn't send these events anywhere. To get an email when one is written, create an [alert on new data](https://docs.snowflake.com/en/user-guide/alerts#label-alerts-type-streaming) on `pipeline_events`. An alert on new data runs only when rows are added to the table, not on a fixed schedule.
+
+1. Set up an [email notification integration](https://docs.snowflake.com/en/user-guide/notifications/email-notifications). Email can only go to verified addresses of users in the same account.
+2. Turn on change tracking, which an alert on new data needs:
+   ```sql
+   ALTER TABLE DOC_INTEL.TELEMETRY.pipeline_events SET CHANGE_TRACKING = TRUE;
+   ```
+3. Create the alert as `DOC_INTEL_ADMIN` (it has `EXECUTE ALERT`), replacing the integration name and address:
+   ```sql
+   CREATE OR REPLACE ALERT DOC_INTEL.TELEMETRY.alert_pipeline_failures
+     WAREHOUSE = DOC_INTEL_QUERY_WH
+     IF (EXISTS (
+       SELECT 1 FROM DOC_INTEL.TELEMETRY.pipeline_events
+       WHERE event_type = 'PIPELINE_ALERT'
+     ))
+     THEN
+       CALL SYSTEM$SEND_SNOWFLAKE_NOTIFICATION(
+         SNOWFLAKE.NOTIFICATION.TEXT_PLAIN(
+           'Document Intelligence logged a pipeline alert. See DOC_INTEL.TELEMETRY.pipeline_events.'),
+         SNOWFLAKE.NOTIFICATION.EMAIL_INTEGRATION_CONFIG(
+           '<email_integration>',
+           'Document Intelligence pipeline alert',
+           ARRAY_CONSTRUCT('<you@example.com>')));
+
+   ALTER ALERT DOC_INTEL.TELEMETRY.alert_pipeline_failures RESUME;
+   ```
+
+The alert runs when new `pipeline_events` rows arrive, which happens while the pipeline runs. Snowflake notes that an alert using a warehouse bills at least one minute of that warehouse each run. To make it a [serverless alert](https://docs.snowflake.com/en/user-guide/alerts#label-alerts-serverless-compute), leave out `WAREHOUSE` and grant the owning role `EXECUTE MANAGED ALERT`. See [Setting up alerts based on data in Snowflake](https://docs.snowflake.com/en/user-guide/alerts) for details.
 
 ### Monitor Cost
 
@@ -320,7 +352,6 @@ Other keys on the Configuration page are stored for your use but nothing reads t
 | Review rule (three or more labels) and confidence values | `sp_classify_parsed_documents` in `sql/03_processing.sql` |
 | Extraction fields and prompts | `sp_extract_document_attributes` in `sql/03_processing.sql` |
 | Agent model, budget, and instructions | `doc_intelligence_agent` in `sql/05_intelligence.sql` |
-| Alert limits (5% errors, 500 pending, 20% needing review) | Alerts in `sql/04_telemetry.sql` |
 | Target lag (1 hour) | Dynamic tables in `sql/03_processing.sql`, search services in `sql/05_intelligence.sql` |
 
 ---

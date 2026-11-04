@@ -807,7 +807,7 @@ Users see suggestions for the lines of business their role can access.
 
 **Path:** `/admin/notifications`
 
-Store rules for pipeline-event messages. This template stores the rules but does not send them; the built-in alerts write to `TELEMETRY.pipeline_events`.
+Store rules for pipeline-event messages. This template stores the rules but does not send them; the pipeline writes `PIPELINE_ALERT` events to `TELEMETRY.pipeline_events`. To get an email, see "Set up failure alerts" in the Operations Guide.
 
 **Viewing rules:**
 - The table shows channel, endpoint, event types, and whether each rule is active
@@ -868,7 +868,7 @@ Model settings offer a list of available Cortex models. Locked settings (lock ic
 
 Each setting has its own **Save** button.
 
-**Note:** Today the SQL reads `batch_size`, `max_processing_attempts`, `processing_timeout_minutes`, `error_rate_threshold_pct`, and `queue_backlog_threshold`. The other settings are stored for your use. The agent's model, the review rule, and the built-in alert limits are set in the SQL scripts. See the Operations Guide.
+**Note:** Today the SQL reads `batch_size`, `max_processing_attempts`, `processing_timeout_minutes`, `error_rate_threshold_pct`, and `queue_backlog_threshold`. The other settings are stored for your use. The agent's model and the review rule are set in the SQL scripts. See the Operations Guide.
 
 ---
 

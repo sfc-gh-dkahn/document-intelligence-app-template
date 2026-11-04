@@ -76,7 +76,7 @@ export default function NotificationsPage() {
       </PageHeader>
 
       <p className="text-sm text-slate-500">
-        Save alert rules for pipeline events and thresholds. This template stores the rules but does not send notifications; the built-in alerts write to TELEMETRY.pipeline_events.
+        Save alert rules for pipeline events and thresholds. This template stores the rules but does not send notifications; the pipeline writes alert events to TELEMETRY.pipeline_events.
       </p>
 
       {/* Add form */}

@@ -178,7 +178,7 @@ if [ "$APP_ONLY" = false ]; then
   # 03: Processing (parse, classify, extract SPs, dynamic table)
   run_sql "${SQL_DIR}/03_processing.sql" "Processing: document catalog, extractions"
 
-  # 04: Telemetry (events, metrics, alerts)
+  # 04: Telemetry (events, metrics)
   run_sql "${SQL_DIR}/04_telemetry.sql" "Telemetry: events, metrics tables"
 
   # 05: Intelligence (semantic view, search service, agent)

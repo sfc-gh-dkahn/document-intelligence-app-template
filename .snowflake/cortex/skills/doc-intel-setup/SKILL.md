@@ -63,7 +63,7 @@ Ground rules:
    | Build compute pool `DOC_MONITOR_POOL` (CPU_X64_S) | Created by the template; billed while active, set to suspend after 5 minutes with nothing running | `SNOWPARK_CONTAINER_SERVICES_HISTORY` |
    | Cortex Search | Size of the indexed text, billed while the service is running even with no searches, plus embedding new or changed text | `CORTEX_SEARCH_DAILY_USAGE_HISTORY` |
    | Agent and Cortex Analyst | Each question asked | `CORTEX_AGENT_USAGE_HISTORY` |
-   | Query warehouse `DOC_INTEL_QUERY_WH` (X-Small) | App queries and the daily alerts | `WAREHOUSE_METERING_HISTORY` |
+   | Query warehouse `DOC_INTEL_QUERY_WH` (X-Small) | App queries | `WAREHOUSE_METERING_HISTORY` |
 
    Snowflake's details: [AI functions](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql-cost), [App Runtime](https://docs.snowflake.com/en/developer-guide/snowflake-app-runtime/cost), [Cortex Search](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-costs), [dynamic tables](https://docs.snowflake.com/en/user-guide/dynamic-tables/cost).
 
@@ -78,7 +78,7 @@ Ground rules:
    - Off: run `ALTER APPLICATION SERVICE DOC_INTEL.APP_SERVICE.DOC_INTEL_APP SUSPEND;` Tell them `RESUME` turns it back on, and that after a redeploy they should check `SHOW APPLICATION SERVICES IN SCHEMA DOC_INTEL.APP_SERVICE;` and suspend it again if it's running.
 
    Saving the setting in `config/deploy.config` keeps it across deploys. The `ACCOUNT_USAGE` views need access to the `SNOWFLAKE` database and are not real time.
-9. Finish with three things to try (Document Browser, Document Search, Doc Intelligence agent) and one line: "Say **tailor document intelligence to my business** and I'll fit the document types and fields to your files."
+9. Finish with three things to try (Document Browser, Document Search, Doc Intelligence agent) and one line: "Say **tailor document intelligence to my business** and I'll fit the document types and fields to your files." Then one more line: the template doesn't email anyone when the pipeline logs a failure, and "Set up failure alerts" in `docs/OPERATIONS_GUIDE.md` shows how to add an email alert. If they ask you to set it up, follow that section.
 
 ---
 
